@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Brand Analysis App</title>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="container d-flex justify-content-center align-items-center flex-column py-5">
+                <div class="mb-4">
+                    <h1 class="text-center">Input in search bar topic for analysis</h1>
+                </div>
+                <div>
+                    <form class="d-flex" action="{% url 'search_results' %}" method="GET">
+                        <div class="input-group w-auto">
+                        <input type="search" name="topic" class="form-control rounded-start" placeholder="Search" aria-label="Search" 
+                        aria-describedby="search-addon" style="width: 675px; font-size: 1.4rem; padding: 0.7rem;">
+                        <select class="form-select rounded-end" name="date_range" style="width: 150px; font-size: 1.4rem;">
+                            <option value="hour">Last hour</option>
+                            <option value="day">Last day</option>
+                            <option value="week">Last week</option>
+                            <option value="month">Last month</option>
+                            <option value="year">Last year</option>
+                            <option value="all">All time</option>
+                        </select>
+                        <input type="number" class="form-control rounded-end" name="post_number" style="width: 225px; font-size: 1.4rem;" placeholder="Number of posts" min="1">
+                        <button class="btn btn-outline-primary" type="submit" style="font-size: 1.4rem; padding: 0.7rem 1rem;">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="container py-5" style="box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);">
+                <h2 class="text-center mb-4">Trending Today</h2>
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-md-6">
+                        <div>
+                            <h3>List of most popular posts today</h3>
+                            {% for x in posts %}
+                            <li>{{ x.title }}</li>
+                            {% endfor %}    
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-end">
+                            <div class="col-md-6"></div>
+                            <div>
+                                <h3>List of top entities today</h3>
+                                {% for x in top_entities %}
+                                <li>{{ x }}</li>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container py-5" style="box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);">
+                {% block content %}
+                    <h2>Posts and Comments Per Day Chart</h2>
+                    {{ plot_div|safe }}
+                    <h2>{{ topic }} Sentiment Analysis</h2>
+                    {{ chart|safe }}
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

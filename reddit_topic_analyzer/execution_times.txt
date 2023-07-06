@@ -1,0 +1,8 @@
+get_posts_by_topic elapsed time: 39.62246513366699 seconds
+get_top_entities elapsed time: 105.86885213851929 seconds
+get_word_cloud_data elapsed time: 4.719661712646484 seconds
+posts_comments_per_day_chart elapsed time: 0.07995486259460449 seconds
+get_sentiment_over_time elapsed time: 43.26679587364197 seconds
+get_top_phrases elapsed time: 39.149855613708496 seconds
+analyze_sentiment_scores elapsed time: 34.9651083946228 seconds
+analyze_sentiment_scores_posts elapsed time: 34.17194199562073 seconds

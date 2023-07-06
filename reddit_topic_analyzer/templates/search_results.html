@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Brand Analysis App</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mb-4">Search Results for "{{ topic }}"</h1>
+      <div class="container py-5" style="box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-md-8">
+            {% if posts %}
+            <h2>List of posts analyzed</h2>
+            <ul>
+              {% for post in posts %}
+              <li>{{ post.title }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p>No posts found.</p>
+            <p>{{ str }}</p>
+            {% endif %}
+          </div>
+          <div class="col-md-4">
+            <div>
+                <h2>List of top Entities</h2>
+                <ul>
+                {% for entity in top_entities %}
+                  <li>{{ entity }}</li>
+                {% endfor %}
+            </ul>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3>Number of posts analyzed: {{ num_posts }}</h3>
+          <h3>Number of comments analyzed: {{ num_comments }}</h3>
+          <h3>Date range: {{ date_range }}</h3>
+        </div>
+      </div>      
+      {% block content %}
+        <div>
+          <h2>Posts and Comments Per Day Chart</h2>
+          {{ plot_div|safe }}
+        </div>
+        
+        <div class="container py-5" style="box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);">
+          <h2>{{ topic }} Sentiment Analysis</h2>
+          {{ chart|safe }}
+
+          <h1>Sentiment Analysis Results</h1>
+          <p>Sentiment Category: {{ sentiment_results.sentiment_category }}</p>
+          <p>Average Sentiment Score: {{ sentiment_results.average_score }}</p>
+          <p>Average Sentiment Score without neutral comments : {{ result.average_score_2 }}</p>
+          <p>Positive Comments: {{ sentiment_results.positive_count }}</p>
+          <p>Negative Comments: {{ sentiment_results.negative_count }}</p>
+          <p>Neutral Comments: {{ sentiment_results.neutral_count }}</p>
+
+          {% for result in sentiment_results_posts %}
+            <h2>Post analyzed - <a href="{{ result.post_url }}">{{ result.post_title }}</a></h2>
+            <p>Sentiment Category: {{ result.sentiment_category }}</p>
+            <p>Average Sentiment Score: {{ result.average_score }}</p>
+            <p>Average Sentiment Score without neutral comments : {{ result.average_score_2 }}</p>
+            <p>Positive Comments: {{ result.positive_count }}</p>
+            <p>Negative Comments: {{ result.negative_count }}</p>
+            <p>Neutral Comments: {{ result.neutral_count }}</p>
+          {% endfor %}
+        </div>
+      {% endblock %}
+    </div>
+  </body>
+</html>
